@@ -3,7 +3,7 @@ Here we use sockets to build a basic chat application. The application is compri
 
 ## Server
 The serverGUI.py provides a basic 3x4 grid interface to take in a given IP address and ports. IP address is auto-detected, but changeable in the GUI. Then, the server will attempt to launch and bind the provided address and port and listen for connections.
-The server is configured to accept up to 16 connections, and prompts all new connections for a nickname. The server will accept messages up to 1024 bytes. The server uses the broadcast() method to send the message back out to all connected clients.
+The server is configured to accept up to 16 connections, and prompts all new connections for a nickname. The server will accept messages up to 1024 bytes. The server uses the broadcast() method to send the message back out to all connected clients.<br>
 ![Alt text](Images/Server%20Launch.png "Server Launch GUI")<br>
 
 
