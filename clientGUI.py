@@ -1,3 +1,4 @@
+from threading import Thread
 from tkinter import *
 from tkinter import ttk 
 import socket
@@ -7,6 +8,26 @@ def get_ip():
     hostname = socket.gethostname()
     ip = socket.gethostbyname(hostname)
     return ip
+def chatlog_frame():
+    launch_frame.destroy()
+    width=800
+    height=600
+    root.geometry(f'{width}x{height}')
+    mainframe = ttk.Frame(root)
+    mainframe.grid(column=0, row=0)
+    input_frame = ttk.Frame(root)
+    input_frame.grid(column=0, row=1)
+    #====================================ChatBox====================================
+    # scrollbar = Scrollbar(mainframe)
+    # scrollbar.pack(side=RIGHT, fill=Y)
+    chatlog = Text(mainframe, bg='white')
+    chatlog.grid(column=0, row=0, columnspan=5, rowspan=3)
+    #====================================SendMSG====================================
+    input_box = ttk.Entry(input_frame, width=100)
+    input_box.grid(column=0, row=1, padx=10,pady=10)
+    conn_thread = Thread(target=lambda:client.connect(chatlog, input_box), name='connection')
+    conn_thread.start()
+
 
 width = 250
 height = 125
@@ -44,23 +65,13 @@ username.insert(0,str(socket.gethostname()))
 #==================================== Row 4 ====================================
 # Launch Server /
 # -------------/
-launch_btn = ttk.Button(launch_frame,text="Launch Server", command=client.connect)
+launch_btn = ttk.Button(launch_frame,text="Connect to Server",
+    command=lambda:chatlog_frame())
 launch_btn.grid(column=0, row=3, columnspan=2,padx=5, pady=5, sticky=(W,E))
 
 
 
-if not launch_frame:
-    mainframe = ttk.Frame(root)
-    mainframe.grid(column=0, row=0)
-    input_frame = ttk.Frame(root)
-    input_frame.grid(column=0, row=1)
-    #====================================ChatBox====================================
-    scrollbar = Scrollbar(mainframe)
-    scrollbar.pack(side=RIGHT, fill=Y)
 
-    #====================================SendMSG====================================
-    input_box = ttk.Entry(input_frame, width=100)
-    input_box.grid(column=0, row=1, padx=10,pady=10)
 
 
 root.mainloop()
